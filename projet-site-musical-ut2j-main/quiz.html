@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <title>Play TuneWave</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/quiz.css">
+</head>
+<body>
+    <script src="js/data.js" type="text/javascript"></script>
+    <script src="js/quiz.js" type="text/javascript"></script>
+    <nav>
+        <img class="nav-element nav-logo" src='./img/logo.png'/>
+        <div class="nav-element nav-logo"><a href="index.html">Tunewave</a></div>
+    
+        <a href='index.html' class="nav-element nav-button">HOME</a>
+        <a href='#' class="nav-element nav-button selected">QUIZ</a>
+        <a href='classement.html' class="nav-element nav-button">RANKING</a>
+        <a href='contribuer.html' class="nav-element nav-button">CONTRIBUTE</a>
+        <a href='about.html' class="nav-element nav-button">ABOUT</a>
+      
+      </nav>
+    <main>
+        <div class="top-layer" id="top-layer">
+            <div class="welcome-msg" id="welcome-message">
+                <h1>WELCOME TO TUNEWAVE</h1>
+    
+                <p id="welcome-message-text"></p>
+
+                <div>
+                    <button class="button" id="welcome-message-skip" onclick="nextMessage();">Continue</button>
+                    <button class="button" id="welcome-message-start" onclick="closeMessage();">Start the quiz!</button>
+                </div>
+            </div>
+            <div class="welcome-msg" id="username-message">
+                <h2>PLEASE ENTER YOUR NAME</h2>
+                <p>Let us know how you want to be called!</p>
+                <div class="remember">
+                    <label for="remember-me">Remember me</label><input type="checkbox" id="remember-me" name="remember"/>
+                </div>
+                <div>
+                    <input type="input" class="input" id="username-input"/>
+                    <button class="button" onclick="saveUsername();">Let's go</button>
+                </div>
+            </div>
+        </div>
+        <div class="back" id="back">
+            <span id="game-counter"></span>
+        </div>
+        <div class="game">
+            <div class="timer" id="timer">
+                <span class="bar"></span>
+                <span class="progress"></span>
+                <span class="time" id="time">10s</span>
+            </div>
+            <span class="loader" id="loader"></span>
+            <span class="lyric active" id="lyric"></span>
+            <div class="choices" id="choices">
+                <button class="button choice" onClick=""></button>
+                <button class="button choice"></button>
+                <button class="button choice"></button>
+                <button class="button choice"></button>
+                <button class="button choice"></button>
+            </div>
+            <button class="button restart" id="restart-button">Play again!</button>
+            <div class="score" id="score">0 PTS</div>
+            <div class="score add" id="score-adder">0 PTS</div>
+            <div class="rounds" id="rounds">ROUND 1</div>
+            <div class="song-title" id="song-title-cont">
+                <span id="song-title"></span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+    
+    </footer>
+</body>
+    
+</html>

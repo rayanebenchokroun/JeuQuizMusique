@@ -1,0 +1,103 @@
+body {
+    background-image: url("../img/ranking.png");
+    backdrop-filter: blur(2px);
+}
+
+main {
+    background-image: none;
+    border: solid 10px black;
+    background-color: rgb(0, 0, 0, 0.6);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main > * {
+    margin: 32px;
+}
+
+.classment-container {
+    border: solid 3px white;
+    border-radius: 32px;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(58, 2, 2, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 8px;
+}
+
+@keyframes start {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 100%;
+    }
+}
+
+.classment-container .rank {
+    width: 100%;
+    border: solid 2px white;
+    border-radius: 22px;
+    margin: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    transition: all 0.3s;
+    animation: start 1s;
+    opacity: 100%;
+}
+.classment-container .rank.primary {
+    width: 100%;
+    border: solid 0;
+    border-radius: 22px;
+    margin: 0;
+    padding: 4px 16px;
+    display: flex;
+    flex-direction: row;
+    transition: all 0.3s;
+}
+
+.classment-container .rank:hover {
+    background-color: rgba(119, 22, 22, 0.6);
+    cursor: pointer;
+}
+
+.classment-container .rank .number {
+    font-size: 18px;
+    width: 10%;
+}
+.classment-container .rank .name {
+    font-family: SecondaryFont, serif;
+    width: 70%;
+}
+.classment-container .rank .player-score {
+    width: 10%;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid rgba(0, 0, 0, 0); /* Blue */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    opacity: 100%;
+    transition: all 0.4s;
+    animation: spin 2s linear infinite;
+    z-index: 1;
+    top: 50%;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader:not(.visible) {
+    opacity: 0;
+}

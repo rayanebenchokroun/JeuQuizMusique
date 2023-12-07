@@ -1,0 +1,47 @@
+<html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking - TuneWave</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="./css/quiz.css">
+    <link rel="stylesheet" type="text/css" href="./css/classement.css">
+</head>
+<body>
+
+    <nav>
+        <img class="nav-element nav-logo" src='./img/logo.png'/>
+        <div class="nav-element nav-logo"><a href="index.html">Tunewave</a></div>
+    
+        <a href='index.html' class="nav-element nav-button">HOME</a>
+        <a href='quiz.html' class="nav-element nav-button">QUIZ</a>
+        <a href='classement.html' class="nav-element nav-button selected">RANKING</a>
+        <a href='contribuer.html' class="nav-element nav-button">CONTRIBUTE</a>
+        <a href='about.html' class="nav-element nav-button">ABOUT</a>
+      
+    </nav>
+
+    <main>
+        <script src="./js/ranking.js"></script>
+        <div>
+            <h1>GLOBAL RANKING</h1>
+        </div>
+        <div class="classment-container" id="rank-container">
+            <div class="rank primary">
+                <span class="number">N°</span>
+                <span class="name">NAME</span>
+                <span class="player-score">SCORE</span>
+            </div>
+            <div class="loader" id="loader"></div>
+        </div>
+        
+    </main>
+    
+   
+
+    <footer>
+    
+    </footer>
+</body>
+</html>
