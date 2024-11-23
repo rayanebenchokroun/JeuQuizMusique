@@ -33,7 +33,8 @@ body {
 
 nav {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     top: 0;
@@ -41,17 +42,26 @@ nav {
     padding: 32px;
 }
 
-.nav-element {
+main {
+    overflow: hidden;
+}
 
-    margin-left: 32px;
-    
+.logo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-container {
+    display: flex;
 }
 
 a.nav-element {
-    
+
     text-decoration: none;
     color: #fff;
-    transition: all 0.2s;
+    transition: transform 0.2s;
     
 }
 a.nav-element:hover {
@@ -67,7 +77,6 @@ a.nav-element:hover {
 }
 
 img.nav-logo {
-    height: 64px;
     margin-right: 16px;
 }
 
@@ -75,8 +84,8 @@ img.nav-logo {
 
     justify-self: flex-start;
     margin-right: auto;
-    font-size: 48px;
 }
+
 .nav-logo a {
     color: white;
     text-decoration: none;
@@ -93,8 +102,10 @@ main {
 
     padding: 64px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
 
 }
 
@@ -118,9 +129,8 @@ main {
 .main-section .title {
 
     font-weight: bold;
-    font-size: 78px;
     filter: drop-shadow(5px 5px 16px rgb(255, 255, 255, 0.4));
-    transition: all 2s;
+    transition: transform 2s;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -141,24 +151,17 @@ main {
 .title-letter:nth-child(7) { animation-delay: 1.05s; }
 .title-letter:nth-child(8) { animation-delay: 1.2s; }
 
-.main-section .title.visible {
-
-    margin-bottom: 80px;
-
-}
 
 .main-section .title-description {
-    font-size: 26px;
     text-align: center;
     font-weight: bold;
-    position: absolute;
-    opacity: 0%;    
-    transition: all 2s;
+    opacity: 0;
+    transition: opacity 2s;
 }
 
 .main-section .title-description.visible {
     opacity: 100%;
-    margin-top: 100px;
+    margin-top: 20px;
 }
 
 p {
@@ -169,16 +172,14 @@ p {
 .card {
 
     position: absolute;
-    width: 12vw;
-    height: 40vh;
     background-color: aqua;
-    -webkit-box-shadow: 2px 5px 29px 5px rgba(0,0,0,0.42); 
-    box-shadow: 2px 5px 29px 5px rgba(0,0,0,0.42);
+    -webkit-box-shadow: 2px 5px 29px 5px rgba(0, 0, 0, 0.42);
+    box-shadow: 2px 5px 29px 5px rgba(0, 0, 0, 0.42);
     transition: transform 1s, filter 1s, z-index 1s;
 
     border-radius: 16px;
-    background-size:cover;
-    background-position: center;
+    background-size: cover;
+    background-position: top center;
 
 }
 
@@ -205,25 +206,154 @@ footer {
 
 .secondary-section .move-button {
 
-    background: none;
     border: none;
     padding: 0;
-    margin: 0;
     overflow: visible;
     outline: none;
     cursor: pointer;
-    width: 100px;
-    height: 100px;
+    width: max(5vw, 50px);
+    height: max(5vw, 50px);
     background-image: url("../img/arrow.png");
     background-size: cover;
     transition: all 0.4s;
     opacity: 80%;
     align-self: flex-end;
-    margin-bottom: 32px;
+    margin-bottom: 72px;
+    margin-left: 20%;
+    margin-right: 20%;
     z-index: 200;
 }
 
 .secondary-section .move-button.left {
-    margin-right: auto;
     transform: scaleX(-1);
+}
+
+.play-button {
+    border: 1px solid #000; /* Adding a border for visibility */
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    padding: 1.4vh;
+    border-radius: 12px;
+    transition: all 0.5s;
+    opacity: 0.7;
+    position: relative;
+    font-size: 1.6vh;
+    margin-top: 2vh;
+    background: rgb(177,73,181);
+    background: -moz-linear-gradient(137deg, rgba(177,73,181,1) 0%, rgba(246,39,163,1) 100%);
+    background: -webkit-linear-gradient(137deg, rgba(177,73,181,1) 0%, rgba(246,39,163,1) 100%);
+    background: linear-gradient(137deg, rgba(177,73,181,1) 0%, rgba(246,39,163,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b149b5",endColorstr="#f627a3",GradientType=1);
+    animation: playButton 5s ease;
+}
+
+@keyframes playButton {
+    0% {
+        opacity: 0;
+        transform: scale(5%);
+    }
+    66% {
+        opacity: 0;
+        transform: scale(5%);
+    }
+    100% {
+        opacity: 0.7;
+    }
+}
+
+.play-button:hover {
+    opacity: 1;
+}
+
+@media screen and (max-aspect-ratio: 1/1) {
+    main {
+        display: grid;
+        width: 100%;
+        height: 80%;
+        grid-template-columns: none;
+        grid-template-rows: 35% 65%;
+    }
+    nav {
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .main-section .title {
+        font-size: 4vh;
+    }
+
+    .nav-container {
+        margin-top: 24px;
+    }
+
+    .nav-element {
+        font-size: 1.2vh;
+        margin-left: 2.5vw;
+        margin-right: 2.5vw;
+    }
+
+    .main-section .title-description {
+        font-size: 1.2vh;
+    }
+
+    img.nav-logo {
+        height: 3vh;
+    }
+
+    .nav-logo {
+        font-size: 3vh;
+    }
+
+    .card {
+        height: 25vh;
+        border-radius: 2.5vw;
+        aspect-ratio: 1/2;
+    }
+
+}
+
+@media screen and (min-aspect-ratio: 1/1) {
+
+
+    .main-section .title {
+        font-size: 4vw;
+    }
+
+    .nav-element {
+        font-size: 1.8vh;
+        margin-left: 2vw;
+        margin-right: 2vw;
+    }
+
+    .main-section .title-description {
+        font-size: 1.2vw;
+    }
+
+    img.nav-logo {
+        height: 3vw;
+    }
+
+    .nav-logo {
+        font-size: 2vw;
+    }
+
+    .card {
+        height: 30vh;
+        border-radius: 1vw;
+        aspect-ratio: 4/7;
+    }
+
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.center-elements {
+    justify-content: center;
+    align-items: center;
 }

@@ -3,12 +3,17 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    z-index: 200;
+    z-index: 600;
     align-items: center;
     display: flex;
     position: absolute;
     justify-content: center;
     align-content: center;
+    transition: all 0.5s;
+}
+
+main {
+    max-height: 80%;
 }
 
 .top-layer > div {
@@ -16,10 +21,12 @@
 }
 
 .top-layer.done {
+    opacity: 0;
     display: none;
 }
 
 .welcome-msg:not(.visible) {
+    opacity: 0;
     display: none;
 }
 
@@ -27,29 +34,33 @@
     backdrop-filter: blur(20px);
     position: absolute;
     margin: auto;
-    max-width: 70%;
+    max-width: 80%;
+    height: fit-content;
+    max-height: 80%;
     text-align: center;
-    z-index: 1;
+    z-index: 600;
     background-color: rgb(0, 0, 0, 0.5);
     border: 4px solid white;
     border-radius: 32px;
-    padding: 32px;
+    padding: 4vh;
     display: flex;
     flex-direction: column;
-
+    justify-content: space-between;
+    transition: all 0.5s;
 }
 
 .welcome-msg p {
     margin: 20px;
+    font-size: 1.6vh;
 }
 
 .welcome-msg h1 {
-    font-size: 50px;
-    margin: 24px;
+    font-size: 2.8vh;
+    margin: 2vh;
 }
 .welcome-msg h2 {
-    font-size: 25px;
-    margin: 24px;
+    font-size: 1.5vh;
+    margin: 1.5vh;
 }
 
 
@@ -57,24 +68,23 @@ button {
     background-color: transparent;
     border: 1px solid #000; /* Adding a border for visibility */
     color: #000;
-    padding: 5px 10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 14px;
+    font-size: 1.2vh;
     cursor: pointer;
 }
 
 .button {
+
     padding: 14px;
     border-radius: 12px;
     transition: all 0.5s;
     opacity: 0.7;
     background: rgb(177,73,181);
-background: -moz-linear-gradient(137deg, rgba(177,73,181,1) 0%, rgba(246,39,163,1) 100%);
-background: -webkit-linear-gradient(137deg, rgba(177,73,181,1) 0%, rgba(246,39,163,1) 100%);
-background: linear-gradient(137deg, rgba(177,73,181,1) 0%, rgba(246,39,163,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#b149b5",endColorstr="#f627a3",GradientType=1);
+    background: -moz-linear-gradient(137deg, rgba(177,73,181,1) 0%, rgba(246,39,163,1) 100%);
+    background: -webkit-linear-gradient(137deg, rgba(177,73,181,1) 0%, rgba(246,39,163,1) 100%);
+    background: linear-gradient(137deg, rgba(177,73,181,1) 0%, rgba(246,39,163,1) 100%);
 }
 
 .button.btn-theme.selected {
@@ -106,11 +116,15 @@ input[type="input"], input[type="text"] {
     -moz-appearance: none;
     border: 1px solid #ccc;
     padding: 8px;
-    font-size: 16px;
+    font-size: 1.4vh;
+}
+label[for="remember-me"] {
+    font-size: 1.6vh;
+    font-family: SecondaryFont, serif;
 }
 
 .input {
-    font-family: SecondaryFont;
+    font-family: SecondaryFont, serif;
     border: none;
     border-radius: 8px;
 }
@@ -176,7 +190,8 @@ main .game {
 }
 
 .loader:not(.visible) {
-    opacity: 0%;
+    opacity: 0;
+    display: none;
 }
 
 .themes {
@@ -245,8 +260,9 @@ main .game {
         margin-right: 100%;
         background-color: #ff0e58;
     }
-
 }
+
+
 
 .timer > .progress {
     position: absolute;
@@ -383,6 +399,30 @@ main .game {
     }
 }
 
+@keyframes streak {
+    0% {
+        transform: translate(-300px, 100px) scale(250%);
+        opacity: 1;
+    }
+    10% {
+        transform: translate(-300px, 100px) scale(400%);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate(-300px, 100px) scale(200%);
+        opacity: 0;
+    }
+}
+
+.score.streak {
+    color: blueviolet;
+    opacity: 0;
+}
+.score.streak.active {
+    animation: streak 2.5s ease;
+    opacity: 0;
+}
+
 .score.add.active {
     animation: adding 2.5s ease;
     opacity: 0;
@@ -397,15 +437,22 @@ main .game {
 
 .button.restart {
     font-family: SecondaryFont, serif;
-    position: absolute;
     font-size: 36px;
     padding: 24px;
-    bottom: 20%;
     transition: all 1s;
-    z-index: 500;
 }
 
-.button.restart:not(.visible) {
+#restart-part {
+    position: absolute;
+    bottom: 20%;
+    width: 80%;
+    transition: all 1s;
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: row;
+    z-index: 300;
+}
+#restart-part:not(.visible) {
     display: none;
     opacity: 0;
 }
@@ -439,3 +486,23 @@ main .game {
     }
 }
 
+@media screen and (min-aspect-ratio: 1/1) {
+
+    .welcome-msg p {
+        margin: 20px;
+        font-size: 2.6vh;
+    }
+
+    .welcome-msg h1 {
+        font-size: 3vh;
+        margin: 2vh;
+    }
+    .welcome-msg h2 {
+        font-size: 2.5vh;
+        margin: 1.5vh;
+    }
+    .welcome-msg {
+        max-width: 60%;
+    }
+
+}

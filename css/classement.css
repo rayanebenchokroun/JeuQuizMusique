@@ -1,33 +1,37 @@
+header {
+    max-height: 20%;
+}
+
 body {
     background-image: url("../img/ranking.png");
     backdrop-filter: blur(2px);
 }
 
 main {
-    background-image: none;
-    border: solid 10px black;
-    background-color: rgb(0, 0, 0, 0.6);
-    padding: 32px;
+    border-color: rgba(142, 136, 160, 0.4);
+    background-color: rgba(28, 3, 3, 0.3);
+    backdrop-filter: blur(240px);
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
-main > * {
-    margin: 32px;
-}
-
-.classment-container {
-    border: solid 3px white;
+.classment-container-parent {
+    border: solid 3px rgba(255, 255, 255, 0.53);
     border-radius: 32px;
     width: 80%;
     height: 80%;
-    background-color: rgba(58, 2, 2, 0.6);
+    background-color: rgba(33, 2, 58, 0.6);
     display: flex;
-    align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    padding: 8px;
+}
+
+.classment-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 @keyframes start {
@@ -39,44 +43,74 @@ main > * {
     }
 }
 
+.rank {
+    font-size: 1.4vh;
+}
+
 .classment-container .rank {
-    width: 100%;
     border: solid 2px white;
-    border-radius: 22px;
+    border-radius: 2.2vh;
     margin: 8px;
-    padding: 16px;
+    padding: 1.2vh;
     display: flex;
     flex-direction: row;
     transition: all 0.3s;
     animation: start 1s;
     opacity: 100%;
 }
-.classment-container .rank.primary {
+.classment-container-parent > .rank {
     width: 100%;
     border: solid 0;
-    border-radius: 22px;
+    background: none;
+    backdrop-filter: blur(1px);
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
+    border-bottom: solid 1px white;
     margin: 0;
-    padding: 4px 16px;
+    padding: 4px 24px;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: row;
     transition: all 0.3s;
+    position: sticky;
 }
 
-.classment-container .rank:hover {
-    background-color: rgba(119, 22, 22, 0.6);
+.classment-container .rank:nth-child(1) {
+    padding: 2.4vh 1.2vh;
+    background-color: rgba(178, 48, 229, 0.29);
+    box-shadow: 0px 0px 24px 6px rgba(122, 45, 255, 0.91);
+}
+.classment-container .rank:nth-child(2) {
+    padding: 2vh 1.2vh;
+    background-color: rgba(163, 48, 229, 0.18);
+    box-shadow: 0px 0px 24px 6px rgba(45, 55, 255, 0.32);
+}
+.classment-container .rank:nth-child(3) {
+    padding: 1.6vh 1.2vh;
+    background-color: rgba(81, 48, 229, 0.1);
+}
+
+
+.classment-container:has(.rank:hover) .rank:not(:hover) {
+    opacity: 50%;
+}
+
+.classment-container:has(.rank:hover) .rank:hover {
+    box-shadow: 0px 0px 24px 6px rgba(255, 255, 255, 0.91);
     cursor: pointer;
 }
 
-.classment-container .rank .number {
-    font-size: 18px;
-    width: 10%;
+
+.rank .number {
+    width: 20%;
 }
-.classment-container .rank .name {
-    font-family: SecondaryFont, serif;
-    width: 70%;
+.rank .name {
+    width: 50%;
 }
-.classment-container .rank .player-score {
-    width: 10%;
+.rank .player-score {
+    width: 20%;
 }
 
 .loader {
@@ -90,7 +124,8 @@ main > * {
     transition: all 0.4s;
     animation: spin 2s linear infinite;
     z-index: 1;
-    top: 50%;
+    top: calc(50% - 40px);
+    left: calc(50% - 40px);
 }
 
 @keyframes spin {
@@ -100,4 +135,49 @@ main > * {
 
 .loader:not(.visible) {
     opacity: 0;
+}
+
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+/* Style the scrollbar track (background) */
+::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+    margin: 16px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(73,0,164,0.6);
+    background: linear-gradient(3deg, rgba(73,0,164,0.6) 0%, rgba(255,0,153,0.6) 100%);
+    border-radius: 8px;
+}
+
+/* Hide the scrollbar buttons */
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+.ranking-title-container {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ranking-title {
+    font-size: 2.5vh;
+}
+
+@media screen and (max-width: 720px) {
+    main {
+        padding: 0;
+        border: solid 0;
+        background: none;
+    }
+    .classment-container-parent {
+        width: 100%;
+        height: 90%;
+    }
 }

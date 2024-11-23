@@ -8,19 +8,24 @@
 </head>
 
 <body>
-  <script src="js/title.js"></script>
-  <script src="js/cards.js"></script>
-  <nav>
-    <img class="nav-element nav-logo" src='./img/logo.png'/>
-    <div class="nav-element nav-logo"><a href="index.html">Tunewave</a></div>
+<script src="js/title.js"></script>
+<script src="js/cards.js"></script>
+  <header>
+    <nav>
+      <div class="logo-container">
+        <img class="nav-logo" src='./img/logo.png'/>
+        <div class="nav-logo"><a href="index.html">Tunewave</a></div>
+      </div>
 
-    <a href='#' class="nav-element nav-button selected">HOME</a>
-    <a href='quiz.html' class="nav-element nav-button">QUIZ</a>
-    <a href='classement.html' class="nav-element nav-button">RANKING</a>
-    <a href='contribuer.html' class="nav-element nav-button">CONTRIBUTE</a>
-    <a href='about.html' class="nav-element nav-button">ABOUT</a>
-  
-  </nav>
+      <div class="nav-container">
+        <a class="nav-element nav-button selected" href='#'>HOME</a>
+        <a class="nav-element nav-button" href='quiz.html'>QUIZ</a>
+        <a class="nav-element nav-button" href='classement.html'>RANKING</a>
+        <a class="nav-element nav-button" href='contribuer.html'>CONTRIBUTE</a>
+        <a class="nav-element nav-button" href='about.html'>ABOUT</a>
+      </div>
+    </nav>
+  </header>
   <main>
   
     <section class="main-section">
@@ -28,6 +33,7 @@
       <p class="title-description" id="title-description">
         Dive into the rhythm, ride the TuneWave <br> where every beat unlocks a new musical adventure!
       </p>
+      <button class="play-button" onclick="location.href = 'quiz.html'">Play now</button>
     </section>
 
     <section class="secondary-section">
@@ -42,10 +48,7 @@
 
 
   </main>
-  
-  <footer>
-    
-  </footer>
+
   
 
 </body>

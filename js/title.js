@@ -14,9 +14,6 @@ function titleSetup() {
             })
         }, (i * 200));
     }
-    //setTimeout(()=>{
-    //    title.innerHTML = `${oTitle}`;
-    //}, 2800);
 
     setTimeout(() => {
         title.childNodes.forEach(child => {

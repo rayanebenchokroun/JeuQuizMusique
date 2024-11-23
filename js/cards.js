@@ -9,7 +9,7 @@ function cardToPos(card) {
 function posToCords(pos) {
 
     let a = pos + Math.PI/2;
-    const X = 12, Y = 10;
+    const X = 10, Y = 10;
     
     return [
         X * Math.cos(a),

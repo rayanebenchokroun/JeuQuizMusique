@@ -9,39 +9,41 @@
     <link rel="stylesheet" type="text/css" href="./css/classement.css">
 </head>
 <body>
-
+<header>
     <nav>
-        <img class="nav-element nav-logo" src='./img/logo.png'/>
-        <div class="nav-element nav-logo"><a href="index.html">Tunewave</a></div>
-    
-        <a href='index.html' class="nav-element nav-button">HOME</a>
-        <a href='quiz.html' class="nav-element nav-button">QUIZ</a>
-        <a href='classement.html' class="nav-element nav-button selected">RANKING</a>
-        <a href='contribuer.html' class="nav-element nav-button">CONTRIBUTE</a>
-        <a href='about.html' class="nav-element nav-button">ABOUT</a>
-      
-    </nav>
+        <div class="logo-container">
+            <img class="nav-element nav-logo" src='./img/logo.png'/>
+            <div class="nav-element nav-logo"><a href="index.html">Tunewave</a></div>
+        </div>
 
-    <main>
-        <script src="./js/ranking.js"></script>
-        <div>
-            <h1>GLOBAL RANKING</h1>
+        <div class="nav-container">
+            <a class="nav-element nav-button" href='index.html'>HOME</a>
+            <a class="nav-element nav-button" href='quiz.html'>QUIZ</a>
+            <a class="nav-element nav-button selected" href='classement.html'>RANKING</a>
+            <a class="nav-element nav-button" href='contribuer.html'>CONTRIBUTE</a>
+            <a class="nav-element nav-button" href='about.html'>ABOUT</a>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <script src="./js/ranking.js"></script>
+    <div class="ranking-title-container">
+        <h1 class="ranking-title">GLOBAL RANKING</h1>
+    </div>
+    <div class="classment-container-parent">
+        <div class="loader" id="loader"></div>
+        <div class="rank">
+            <span class="number">N°</span>
+            <span class="name">NAME</span>
+            <span class="player-score">HIGHSCORE</span>
         </div>
         <div class="classment-container" id="rank-container">
-            <div class="rank primary">
-                <span class="number">N°</span>
-                <span class="name">NAME</span>
-                <span class="player-score">SCORE</span>
-            </div>
-            <div class="loader" id="loader"></div>
+
         </div>
+    </div>
+
         
     </main>
-    
-   
-
-    <footer>
-    
-    </footer>
 </body>
 </html>

@@ -13,6 +13,16 @@ const welcomeTexts = [
 
 "We hope these rules help you have fun while testing your musical knowledge. Shall we start?"]
 
+//sounds
+const countdown = new Audio("sound/countdown.wav");
+const crowd = new Audio("sound/crowd.mp3");
+const wrongAnswer = new Audio("sound/wrong_answer.mp3");
+const timer = new Audio("sound/timer.mp3");
+
+const rightAnswers = [0, 1, 2, 3, 4].map(e => new Audio(`sound/right_answer_${e}.mp3`));
+
+[...rightAnswers, countdown, wrongAnswer, timer].forEach(sound => sound.volume = 0.2);
+crowd.volume = 0.1;
 
 
 let GameSession = {
@@ -21,6 +31,7 @@ let GameSession = {
     score: 0,
     timer: 0,
     round: 1,
+    streak: 0,
     timerStopped: false,
     currentLyric: {},
     rightAnswer: 0,
@@ -75,11 +86,12 @@ function updateBlock() {
 
 function saveUsername() {
     let username = document.getElementById("username-input").value;
+    let savingUsername = username.split(" ").filter(a => a).sort().join("").toLowerCase();
     let rememberMe = document.getElementById("remember-me").checked;
     if (!username) {
         return alert("Veuillez entrer un nom correct.");
     }
-    GameSession.name = username;
+    GameSession.name = savingUsername;
     if (rememberMe) localStorage.setItem("tunewaveUsername", username);
     else localStorage.removeItem("tunewaveUsername");
     currentBlock++;
@@ -88,13 +100,20 @@ function saveUsername() {
 }
 
 let counter = 3;
-function startCounter() {
+async function startCounter() {
     GameSession.starting = true;
+    countdown.currentTime = 0;
+    await countdown.play();
     updateCounter();
-    setTimeout(updateCounter, 750);
-    setTimeout(updateCounter, 1500);
-    setTimeout(updateCounter, 2250);
-    setTimeout(startGame, 3000);
+    await wait(1000);
+    updateCounter();
+    await wait(1000);
+    updateCounter();
+    await wait(1000);
+    updateCounter();
+    await wait(700);
+    countdown.pause();
+    startGame();
 }
 
 function updateCounter() {
@@ -114,6 +133,7 @@ function startGame() {
     GameSession.started = true;
     GameSession.round = 1;
     GameSession.score = 0;
+    GameSession.streak = 0;
     document.getElementById("back").style.display = "none";
     startRound();
 }
@@ -170,13 +190,14 @@ async function startRound() {
                 throw new Error();
             }
             startConfetti();
+            await crowd.play();
             loader.classList.remove("visible");
             lyricElement.classList.add("active");
             lyricElement.innerText = `Your final score, ${GameSession.name}, is: ${GameSession.score}`;
-            document.getElementById("restart-button").classList.add("visible");
+            document.getElementById("restart-part").classList.add("visible");
             document.getElementById("restart-button").onclick = () => {
                 document.getElementById("restart-button").onclick = () => {};
-                document.getElementById("restart-button").classList.remove("visible");
+                document.getElementById("restart-part").classList.remove("visible");
                 document.getElementById("lyric").classList.remove("active");
                 document.getElementById("lyric").innerText = "";
                 GameSession.starting = false;
@@ -193,9 +214,10 @@ async function startRound() {
 
     const loader = document.getElementById("loader");
     loader.classList.add("visible");
+    document.getElementById("score").innerText = `${GameSession.score} PTS`;
     try {
 
-        await wait(300 + Math.random() * 1200 | 0);
+        await wait(100 + Math.random() * 200 | 0);
 
         loader.classList.remove("visible");
         const lyrics = GLOBAL_LYRICS;
@@ -214,8 +236,17 @@ async function startRound() {
                     _e.classList.add((j === GameSession.rightAnswer) ? "right" : (j === i) ? "wrong-selected" : "wrong");
                     _e.onclick = () => {};
                 });
-                let addedScore = right ? (GameSession.timer) * 5 : (GameSession.timer - 11) * 3;
+                let addedScore = right ?
+                    ((GameSession.timer) * 5 + GameSession.streak * (GameSession.timer) * Math.floor(2 + Math.random() * 3) + (GameSession.streak === 4 ? Math.floor(5 + Math.random() * 10) : 0)) :
+                    (GameSession.timer - 11) * Math.floor(4 + Math.random() * 8);
+                if (!right) GameSession.streak = 0;
+                timer.pause();
+                await (right ? rightAnswers[GameSession.streak] : wrongAnswer).play();
                 await addScore(addedScore);
+                if (right) {
+                    GameSession.streak++;
+                    GameSession.streak = Math.min(GameSession.streak, 4);
+                } else GameSession.streak = 0;
                 await wait(2000);
                 document.getElementById("song-title-cont").classList.remove("visible");
                 lyricElement.classList.remove("active");
@@ -226,16 +257,21 @@ async function startRound() {
 
         const randomLyric = lyrics[Math.floor(Math.random() * lyrics.length)];
         GameSession.currentLyric = randomLyric;
-        let choices = [];
+        const formattedArtist = formatArtist(randomLyric.artist);
+        let choices = [], formattedChoices = [];
         for(let i = 0; i < 5; i++) {
-            let choice;
+            let choice, formattedChoice;
             do {
-                choice = formatArtistProperly(lyrics[Math.floor(Math.random() * lyrics.length)].artist);
-            } while(choices.includes(choice) || compareArtists(choice, randomLyric.artist))
+                let a = formatArtist(lyrics[Math.floor(Math.random() * lyrics.length)].artist)
+                choice = a[0];
+                formattedChoice = a[1];
+            } while(choices.includes(choice) || randomLyric.artist.toLowerCase().includes(choice))
             choices.push(choice);
+            formattedChoices.push(formattedChoice);
         }
         let r = Math.floor(Math.random() * 5);
-        choices[r] = formatArtistProperly(randomLyric.artist);
+        choices[r] = formattedArtist[0];
+        formattedChoices[r] = formattedArtist[1];
         GameSession.rightAnswer = r;
         const lyricElement = document.getElementById("lyric");
         lyricElement.classList.add("active");
@@ -243,9 +279,9 @@ async function startRound() {
         document.getElementById("choices").classList.add("visible");
         document.getElementById("score").classList.add("visible")
         document.getElementById("rounds").classList.add("visible")
-        document.getElementById("rounds").innerText = "ROUND " + GameSession.round;
+        document.getElementById("rounds").innerText = "QUESTION " + GameSession.round;
         Array(...document.getElementById("choices").children).forEach((e, i) => {
-            e.innerText = choices[i];
+            e.innerText = formattedChoices[i];
         })
         startTimer();
 
@@ -255,43 +291,61 @@ async function startRound() {
 }
 
 async function startTimer() {
+    timer.currentTime = 0;
+    await timer.play();
     document.getElementById("timer").classList.add("active");
     const time = document.getElementById("time");
     GameSession.timer = 10;
     GameSession.timerStopped = false;
     for (let i = 10; i >= 0; i--) {
-        if (GameSession.timerStopped) return;
+        if (GameSession.timerStopped) {
+            timer.pause();
+            return;
+        }
         time.innerText = `${i}s`;
         GameSession.timer = i;
         await wait(1000);
     }
-    if (GameSession.timerStopped) return;
+    if (GameSession.timerStopped) {
+        timer.pause();
+        return;
+    }
+    timer.pause();
+    await wrongAnswer.play();
     document.getElementById("timer").classList.remove("active");
     Array(...document.getElementById("choices").children).forEach((e, i) => {
         e.classList.add((i === GameSession.rightAnswer) ? "right" : "wrong");
     });
     document.getElementById("song-title-cont").classList.add("visible")
     document.getElementById("song-title").innerText = GameSession.currentLyric.title + " - " + GameSession.currentLyric.artist;
-    await addScore(-50);
+    await addScore(-Math.floor(50 + Math.random() * 50));
     await wait(2000);
     document.getElementById("lyric").classList.remove("active");
     document.getElementById("song-title-cont").classList.remove("visible")
     GameSession.round++;
+    GameSession.streak = 0;
     startRound();
 }
 
 async function addScore(add) {
 
     GameSession.score += add;
+    GameSession.score = Math.max(GameSession.score, 0);
     const score = document.getElementById("score");
     const scoreAdder = document.getElementById("score-adder");
+    const scoreStreak = document.getElementById("score-streak");
     scoreAdder.innerText = add + " PTS";
     scoreAdder.classList.remove("active");
-    await wait(100);
+    scoreStreak.classList.remove("active");
+    await wait(50);
     scoreAdder.classList.add("active");
     scoreAdder.classList.remove("positive");
     scoreAdder.classList.remove("negative");
     scoreAdder.classList.add(add > 0 ? "positive" : "negative");
+    if (GameSession.streak > 0) {
+        scoreStreak.classList.add("active");
+        scoreStreak.innerText = `${GameSession.streak+1}x`;
+    }
     await wait(1500);
     score.innerText = `${GameSession.score} PTS`;
 
@@ -331,14 +385,15 @@ function createConfetti() {
     });
 }
 
+Array.prototype.random = function() {
+    return this[Math.floor(Math.random() * this.length)];
+}
+
 function compareArtists(artist1, artist2) {
     return formatArtist(artist1) === formatArtist(artist2);
 }
 
 function formatArtist(artist) {
-    return artist.split(" ").join("").split(",")[0].split("ft.")[0];
-}
-
-function formatArtistProperly(artist) {
-    return artist.split(",")[0].split("ft.")[0];
+    const a = artist.split(",").random().split("ft.").random().split("&").random().split(" ").filter(a => a).join(" ");
+    return [a.toLowerCase(), a];
 }
